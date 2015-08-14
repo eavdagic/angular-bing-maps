@@ -246,8 +246,8 @@ function bingMapDirective() {
         controller: function ($scope, $element) {
             // Controllers get instantiated before link function is run, so instantiate the map in the Controller
             // so that it is available to child link functions
-            this.map = new Microsoft.Maps.Map($element[0], {credentials: $scope.credentials, disableBirdseye:true});
-
+            this.map = new Microsoft.Maps.Map($element[0], {credentials: $scope.credentials});
+            
             var eventHandlers = {};
             $scope.map = this.map;
 
@@ -417,7 +417,7 @@ angular.module('angularBingMaps.directives').directive('polyline', polylineDirec
 
 /*global angular, Microsoft, DrawingTools, console*/
 
-function pushpinDirective($compile) {
+function pushpinDirective() {
     'use strict';
 
     function link(scope, element, attrs, mapCtrl) {
@@ -436,18 +436,8 @@ function pushpinDirective($compile) {
         scope.$watch('lat', updatePosition);
         scope.$watch('lng', updatePosition);
         scope.$watch('options', function (newOptions) {
-            newOptions.htmlContent = "<div class='pin " + newOptions.pinColorClass + "'><span class='pin-number'>";
-            if (newOptions.pinData !== undefined) {
-                newOptions.htmlContent += newOptions.pinData;
-            }
-            newOptions.htmlContent += "</span></div>";
-
-            if (newOptions.showPulse) {
-                $('.pin-pulse').remove();
-                newOptions.htmlContent += "<div ng-if='facility.options.pinColorClass' class='pin-pulse'></div>";
-            };
             scope.pin.setOptions(newOptions);
-        }, true);
+        });
         scope.$watch('events', function(events) {
             //Loop through each event handler
             angular.forEach(events, function(usersHandler, eventName) {
@@ -460,12 +450,6 @@ function pushpinDirective($compile) {
                     if(scope.trackBy) {
                         event.target['trackBy'] = scope.trackBy;
                     }
-
-                    if (event.eventName == 'click') {
-                        //change options here on click so options event gets triggered and pulse can chnage 
-                        scope.options.triggerOptionChange = !scope.options.triggerOptionChange;
-                    }
-
                     usersHandler(event);
                     scope.$apply();
                 });
