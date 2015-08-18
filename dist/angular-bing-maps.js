@@ -241,13 +241,19 @@ function bingMapDirective() {
             center: '=?',
             zoom: '=?',
             mapType: '=?',
-            events: '=?'
+            events: '=?',
+            mapApi: '='
+        },
+        link: function(scope, element, attrs){
+            scope.$watch("mapApi", function (val) {                
+                scope.mapApi = scope.map;
+            });
         },
         controller: function ($scope, $element) {
             // Controllers get instantiated before link function is run, so instantiate the map in the Controller
             // so that it is available to child link functions
-            this.map = new Microsoft.Maps.Map($element[0], {credentials: $scope.credentials, disableBirdseye:true});
-
+            this.map = new Microsoft.Maps.Map($element[0], { credentials: $scope.credentials, disableBirdseye: true, showDashboard: false });
+            
             var eventHandlers = {};
             $scope.map = this.map;
 
@@ -256,6 +262,7 @@ function bingMapDirective() {
             });
 
             $scope.$watch('zoom', function (zoom) {
+                //$scope.zoom = $scope.map.getZoom();
                 $scope.map.setView({animate: true, zoom: zoom});
             });
 
