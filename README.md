@@ -38,3 +38,4 @@ Proper documentation is in our road map, but currently not implemented. Please v
 :star: - Third party modules must be manually included in addition to angular-bing-maps.js. Please use modules found inside this repository under /BingMapModules/{{moduleName}}
 TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST 
 TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST 
+https://github.com/eavdagic/angular-bing-maps.git
